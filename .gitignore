@@ -1,0 +1,18 @@
+# Python / build stuff
+__pycache__/
+*.pyc
+
+# Local virtual envs
+.venv/
+venv/
+email-router-lambda/.venv/
+lambda_build/
+email-router-lambda/build_linux/
+
+# Lambda build artifacts
+package.zip
+email-router-lambda/package.zip
+lambda_build/package.zip
+
+# VS Code
+.vscode/
