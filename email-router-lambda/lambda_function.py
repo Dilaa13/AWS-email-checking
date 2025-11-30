@@ -135,8 +135,8 @@ Return JSON with:
 
 agent = Agent(
     tools=[load_projects_from_excel, send_supervisor_email],
-    system=system_prompt,
 )
+
 
 
 # =========================
@@ -178,14 +178,17 @@ def lambda_handler(event, context):
             f"Body:\n{body_text}\n"
         )
 
-        result = agent(
-            {
-                "original_from": original_from,
-                "original_subject": subject,
-                "email_body": body_text,
-                "message": user_message,
-            }
+        # Combine our system instructions + this specific email
+        full_prompt = system_prompt + "\n\n" + user_message
+
+        prompt = (
+            f"Original email:\n"
+            f"From: {original_from}\n"
+            f"Subject: {subject}\n"
+            f"Body: {body_text}\n"
         )
+
+        result = agent(prompt)
 
         print("Agent result:", result)
 
